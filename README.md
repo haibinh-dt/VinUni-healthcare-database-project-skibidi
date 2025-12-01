@@ -32,21 +32,21 @@ This Hospital Management System is a web-based platform built to streamline ever
 - **Server**: XAMPP 
 - **Security**: PHP sessions, password hashing
 ## Team Members and Roles
-- **Nguyen Phuong Thao** – Backend Developer  
-- **Do Thi Hai Binh** – Frontend Developer  
-- **Le Thao Vy** – QA & Documentation  
-## Timeline (Planned Milestones)
-| Date | Milestone |
-|------|-----------|
-| **Dec 1 – Dec 5** | Requirements, tech stack, DB schema outline |
-| **Dec 6 – Dec 10** | Database build + backend (users, patients, auth) |
-| **Dec 11 – Dec 15** | Pharmacy, billing, finance modules |
-| **Dec 16 – Dec 18** | Frontend integration |
-| **Dec 19 – Dec 20** | Testing + bug fixes |
-| **Dec 21** | Deployment + final docs |
-| **Dec 22** | Submission |
+| **Member**                 |**Project Role**                    | **Responsibilities**  |
+|---------------------------|-------------------------------------|-----------------------|
+| **Đỗ Thị Hải Bình**       | Database Architect & Developer      | ERD design • Physical schema • Table creation • PK/FK design |
+| **Lê Thảo Vy**            | MySQL Logic & Optimization Engineer | Stored procedures • Triggers • Views • Indexing • Query optimization |
+| **Nguyễn Thị Phương Thảo**| Security & Testing Engineer         | MySQL users & privileges • RBAC enforcement • Password security • Testing workflow |
+| **All Members**           | Web Integration & Reporting Dev     | Frontend–backend connection • Dashboards • Reports • Final refinement |
 
-Week 1 (Nov 25–Dec 1)     | ███ Team Setup & Topic Proposal ███
-Week 2 (Dec 2–Dec 8)       | ███ Peer Review ███
-Week 3 (Dec 9–Dec 15)      | ███████ Design Document (ERD, DDL, Logic) ███████
-Week 4 (Dec 16–Dec 22)     | ███████████ Implementation + Testing + Final Slide ███████████
+## Timeline (Planned Milestones)
+| **Date Range**      | **Milestone / Work Package** |
+|---------------------|------------------------------|
+| **Dec 1**           | Team registration • Topic selection • GitHub setup • Draft requirements & core entities |
+| **Dec 2 – Dec 5**   | Finalize system requirements • Define tech stack • Outline ERD & database schema |
+| **Dec 6 – Dec 10**  | Build database (tables, PK/FK, constraints) • Implement backend: authentication, staff roles, patient CRUD |
+| **Dec 11 – Dec 15** | Implement appointments, visits, prescriptions • Write stored procedures, triggers, indexes • Submit design document |
+| **Dec 16 – Dec 18** | Frontend integration (HTML/CSS/JS) • Dashboard & reporting module |
+| **Dec 19 – Dec 20** | System testing (RBAC, constraints, workflows) • Bug fixes & refinements |
+| **Dec 21**          | Final integration • Documentation • Prepare presentation slides |
+| **Dec 22**          | **Final submission & project presentation** |
