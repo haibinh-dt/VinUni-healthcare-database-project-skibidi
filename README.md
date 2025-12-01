@@ -43,7 +43,7 @@ This Hospital Management System is a web-based platform built to streamline ever
 | **Date Range**      | **Milestone / Work Package** |
 |---------------------|------------------------------|
 | **Dec 1**           | Team registration • Topic selection • GitHub setup • Draft requirements & core entities |
-| **Dec 2 – Dec 5**   | Finalize system requirements • Define tech stack • Outline ERD & database schema |
+| **Dec 2 – Dec 5**   | Finalize system requirements • Test tech stack • Outline ERD & database schema |
 | **Dec 6 – Dec 10**  | Build database (tables, PK/FK, constraints) • Implement backend: authentication, staff roles, patient CRUD |
 | **Dec 11 – Dec 15** | Implement appointments, visits, prescriptions • Write stored procedures, triggers, indexes • Submit design document |
 | **Dec 16 – Dec 18** | Frontend integration (HTML/CSS/JS) • Dashboard & reporting module |
