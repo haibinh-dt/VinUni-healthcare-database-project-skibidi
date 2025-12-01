@@ -32,9 +32,9 @@ This Hospital Management System is a web-based platform built to streamline ever
 - **Server**: XAMPP 
 - **Security**: PHP sessions, password hashing
 ## Team Members and Roles
-- **Nguyen Van A** – Backend Developer  
-- **Tran Thi B** – Frontend Developer  
-- **Le Van C** – QA & Documentation  
+- **Nguyen Phuong Thao** – Backend Developer  
+- **Do Thi Hai Binh** – Frontend Developer  
+- **Le Thao Vy** – QA & Documentation  
 ## Timeline (Planned Milestones)
 | Date | Milestone |
 |------|-----------|
@@ -45,3 +45,8 @@ This Hospital Management System is a web-based platform built to streamline ever
 | **Dec 19 – Dec 20** | Testing + bug fixes |
 | **Dec 21** | Deployment + final docs |
 | **Dec 22** | Submission |
+
+Week 1 (Nov 25–Dec 1)     | ███ Team Setup & Topic Proposal ███
+Week 2 (Dec 2–Dec 8)       | ███ Peer Review ███
+Week 3 (Dec 9–Dec 15)      | ███████ Design Document (ERD, DDL, Logic) ███████
+Week 4 (Dec 16–Dec 22)     | ███████████ Implementation + Testing + Final Slide ███████████
