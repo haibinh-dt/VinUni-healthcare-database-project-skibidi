@@ -36,7 +36,7 @@ To support a complete hospital workflow and avoid schema redesign in later stage
 - Prescription: medications prescribed during visits
 - PharmacyItem: medication details, stock quantity, expiry date, and supplier
 - MedicalService / Procedure: billable services provided during visits
-- BillingRecord: invoices generated from services and prescriptions
+- Invoice: invoices generated from services and prescriptions
 - FinancialTransaction: income and expense tracking
 - User: login credentials and assigned system roles
 
