@@ -3,7 +3,7 @@ INSERT INTO Department (department_name, description)
 VALUES 
 ('Cardiology', 'Heart and blood vessel treatments'),
 ('Neurology', 'Brain and nervous system treatments'),
-('Pediatrics', 'Children’s health care')
+('Pediatrics', 'Children’s health care'),
 ('Orthopedics', 'Musculoskeletal system treatments'),
 ('Dermatology', 'Skin and cosmetic treatments');
 
@@ -64,4 +64,3 @@ VALUES
 ('14:00:00', '15:00:00'),
 ('15:00:00', '16:00:00'),
 ('16:00:00', '17:00:00');
-
