@@ -135,7 +135,22 @@ BEGIN
     CALL sp_log_audit_event(COALESCE(@current_user_id, 1), 'Payment', NULL, NULL, CAST(NEW.amount AS CHAR), 'INSERT');
 END$$
 
--- 7. One trigger per table to handle all tracked field changes.
+-- =============================================================================
+-- 7. PHARMACY BATCH (BEFORE INSERT)
+-- Purpose: Check if expiry date before insert date
+-- =============================================================================
+DROP TRIGGER IF EXISTS check_expiry_before_insert$$
+CREATE TRIGGER check_expiry_before_insert
+BEFORE INSERT ON PharmacyBatch
+FOR EACH ROW
+BEGIN
+    IF NEW.expiry_date <= CURDATE() THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Expiry date must be greater than today';
+    END IF;
+END$$
+
+-- 8. One trigger per table to handle all tracked field changes.
 
 DROP TRIGGER IF EXISTS trg_audit_user_update$$
 CREATE TRIGGER trg_audit_user_update AFTER UPDATE ON `User` FOR EACH ROW

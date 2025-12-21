@@ -403,7 +403,7 @@ CREATE TABLE IF NOT EXISTS PharmacyBatch (
     item_id INT NOT NULL,
     supplier_id INT NOT NULL,
     batch_number VARCHAR(100) NOT NULL,
-    expiry_date DATE NOT NULL CHECK (expiry_date > CURRENT_DATE),
+    expiry_date DATE NOT NULL,
     selling_unit_price DECIMAL(10,2) NOT NULL CHECK (selling_unit_price >= 0),
     supply_unit_price DECIMAL(10,2) NOT NULL CHECK (supply_unit_price >= 0),
     quantity INT NOT NULL CHECK (quantity >= 0),

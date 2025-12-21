@@ -264,4 +264,6 @@ SELECT 'Notification_Type', COUNT(*) FROM Notification_Type
 UNION ALL
 SELECT 'Department_Leadership', COUNT(*) FROM Department_Leadership
 UNION ALL
-SELECT 'PharmacyItem', COUNT(*) FROM PharmacyItem;
+SELECT 'PharmacyItem', COUNT(*) FROM PharmacyItem
+UNION ALL
+SELECT 'User', COUNT(*) FROM User;
