@@ -1,7 +1,5 @@
 -- =====================================================
--- DATABASE SCHEMA: HOSPITAL MANAGEMENT SYSTEM
--- SAFE MODE: CREATE TABLE IF NOT EXISTS
--- ORDERED BY FOREIGN KEY DEPENDENCIES
+-- DDL SCRIPT: TABLES CREATION
 -- =====================================================
 
 
@@ -66,7 +64,8 @@ CREATE TABLE IF NOT EXISTS `User` (
     username VARCHAR(100) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     `status` ENUM('ACTIVE', 'LOCKED') NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    must_change_password BOOLEAN NOT NULL DEFAULT TRUE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS UserRole (
@@ -163,6 +162,8 @@ CREATE TABLE IF NOT EXISTS Department_Leadership (
         REFERENCES Doctor(doctor_id)
         ON DELETE RESTRICT
         ON UPDATE CASCADE
+        
+	
 ) ENGINE=InnoDB;
 
 
@@ -178,7 +179,7 @@ CREATE TABLE IF NOT EXISTS Appointment (
     timeslot_id INT NOT NULL,
     appointment_date DATE NOT NULL,
     reason TEXT,
-    current_status ENUM('CREATED','CONFIRMED','CANCELLED','COMPLETED') NOT NULL,
+    current_status ENUM('CREATED','CONFIRMED','CANCELLED','IN_PROGRESS','COMPLETED') NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     UNIQUE (doctor_id, appointment_date, timeslot_id),
@@ -205,8 +206,8 @@ CREATE TABLE IF NOT EXISTS Appointment (
 CREATE TABLE IF NOT EXISTS Appointment_Status_History (
     status_history_id INT AUTO_INCREMENT PRIMARY KEY,
     appointment_id INT NOT NULL,
-    old_status ENUM('CREATED','CONFIRMED','CANCELLED','COMPLETED'),
-    new_status ENUM('CREATED','CONFIRMED','CANCELLED','COMPLETED') NOT NULL,
+    old_status ENUM('CREATED','CONFIRMED','CANCELLED','IN_PROGRESS','COMPLETED'),
+    new_status ENUM('CREATED','CONFIRMED','CANCELLED','IN_PROGRESS','COMPLETED') NOT NULL,
     changed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     changed_by INT NOT NULL,
 
@@ -402,7 +403,7 @@ CREATE TABLE IF NOT EXISTS PharmacyBatch (
     item_id INT NOT NULL,
     supplier_id INT NOT NULL,
     batch_number VARCHAR(100) NOT NULL,
-    expiry_date DATE NOT NULL,
+    expiry_date DATE NOT NULL CHECK (expiry_date > CURRENT_DATE),
     selling_unit_price DECIMAL(10,2) NOT NULL CHECK (selling_unit_price >= 0),
     supply_unit_price DECIMAL(10,2) NOT NULL CHECK (supply_unit_price >= 0),
     quantity INT NOT NULL CHECK (quantity >= 0),
@@ -468,7 +469,7 @@ CREATE TABLE IF NOT EXISTS PatientInvoice (
     visit_id INT NOT NULL UNIQUE,
     invoice_date DATE NOT NULL,
     total_amount DECIMAL(15,2) CHECK (total_amount >= 0),
-    status ENUM('PAID','NOT PAID') NOT NULL,
+    `status` ENUM('PAID','NOT PAID') NOT NULL,
 
     FOREIGN KEY (visit_id)
         REFERENCES Visit(visit_id)
@@ -528,7 +529,7 @@ CREATE TABLE IF NOT EXISTS FinancialTransaction (
 CREATE TABLE IF NOT EXISTS AuditLog (
     audit_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    table_name VARCHAR(100) NOT NULL,
+    `table_name` VARCHAR(100) NOT NULL,
     field_name VARCHAR(100),
     old_value TEXT,
     new_value TEXT,

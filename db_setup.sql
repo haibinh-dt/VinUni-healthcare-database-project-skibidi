@@ -1,3 +1,7 @@
+-- =====================================================
+-- DATABASE CREATION
+-- =====================================================
+
 -- Create database only if it does not already exist
 CREATE DATABASE IF NOT EXISTS hospital_management_system
     CHARACTER SET utf8mb4			# For recording Vietnamese names
