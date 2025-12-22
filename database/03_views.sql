@@ -307,3 +307,132 @@ SELECT
 FROM User u
 JOIN UserRole ur ON u.user_id = ur.user_id
 JOIN Role r ON ur.role_name = r.role_name;
+
+-- 22. Authentication View
+-- Roles: SYSTEM
+CREATE OR REPLACE VIEW v_user_auth AS
+SELECT
+    u.user_id,
+    u.username,
+    u.password_hash,
+    u.status,
+    ur.role_name
+FROM User u
+JOIN UserRole ur ON u.user_id = ur.user_id;
+
+-- =====================================================
+-- ANALYTICS VIEWS
+-- =====================================================
+
+-- Daily Appointments Summary
+CREATE OR REPLACE VIEW vw_daily_appointments AS
+SELECT 
+    a.appointment_date,
+    COUNT(*) AS total_appointments,
+    COUNT(CASE WHEN a.current_status = 'COMPLETED' THEN 1 END) AS completed,
+    COUNT(CASE WHEN a.current_status = 'CANCELLED' THEN 1 END) AS cancelled,
+    COUNT(CASE WHEN a.current_status = 'CONFIRMED' THEN 1 END) AS confirmed,
+    COUNT(CASE WHEN a.current_status IN ('CREATED', 'IN_PROGRESS') THEN 1 END) AS pending
+FROM Appointment a
+WHERE a.appointment_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+GROUP BY a.appointment_date
+ORDER BY a.appointment_date DESC;
+
+-- Monthly Revenue Summary
+CREATE OR REPLACE VIEW vw_monthly_revenue AS
+SELECT 
+    DATE_FORMAT(pi.invoice_date, '%Y-%m') AS month,
+    COUNT(*) AS invoice_count,
+    SUM(pi.total_amount) AS total_revenue,
+    SUM(CASE WHEN pi.status = 'PAID' THEN pi.total_amount ELSE 0 END) AS paid_revenue,
+    SUM(CASE WHEN pi.status = 'NOT PAID' THEN pi.total_amount ELSE 0 END) AS unpaid_revenue
+FROM PatientInvoice pi
+WHERE pi.invoice_date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+GROUP BY DATE_FORMAT(pi.invoice_date, '%Y-%m')
+ORDER BY month DESC;
+
+-- Drug Usage Trends
+CREATE OR REPLACE VIEW vw_drug_usage_trends AS
+SELECT 
+    pi.item_name,
+    DATE_FORMAT(sm.moved_at, '%Y-%m') AS month,
+    SUM(CASE WHEN sm.movement_type = 'OUT' THEN sm.quantity ELSE 0 END) AS dispensed_quantity,
+    COUNT(DISTINCT sm.reference_id) AS prescription_count
+FROM StockMovement sm
+JOIN PharmacyBatch pb ON sm.batch_id = pb.batch_id
+JOIN PharmacyItem pi ON pb.item_id = pi.item_id
+WHERE sm.reference_type = 'PRESCRIPTION'
+  AND sm.moved_at >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY pi.item_name, DATE_FORMAT(sm.moved_at, '%Y-%m')
+ORDER BY month DESC, dispensed_quantity DESC;
+
+-- Doctor Performance Summary
+CREATE OR REPLACE VIEW vw_doctor_performance AS
+SELECT 
+    d.doctor_id,
+    d.full_name AS doctor_name,
+    dept.department_name,
+    COUNT(DISTINCT v.visit_id) AS total_visits,
+    COUNT(DISTINCT a.appointment_id) AS total_appointments,
+    AVG(TIMESTAMPDIFF(MINUTE, v.visit_start_time, v.visit_end_time)) AS avg_visit_duration_minutes
+FROM Doctor d
+JOIN Department dept ON d.department_id = dept.department_id
+LEFT JOIN Visit v ON d.doctor_id = v.doctor_id 
+    AND v.visit_start_time >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+LEFT JOIN Appointment a ON d.doctor_id = a.doctor_id 
+    AND a.appointment_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+GROUP BY d.doctor_id, d.full_name, dept.department_name;
+
+-- Patient Visit Frequency
+CREATE OR REPLACE VIEW vw_patient_visit_frequency AS
+SELECT 
+    p.patient_id,
+    p.full_name AS patient_name,
+    COUNT(v.visit_id) AS total_visits,
+    MAX(v.visit_start_time) AS last_visit_date,
+    MIN(v.visit_start_time) AS first_visit_date,
+    DATEDIFF(CURDATE(), MAX(v.visit_start_time)) AS days_since_last_visit
+FROM Patient p
+LEFT JOIN Visit v ON p.patient_id = v.patient_id
+GROUP BY p.patient_id, p.full_name
+HAVING COUNT(v.visit_id) > 0
+ORDER BY total_visits DESC;
+
+-- Financial Transaction Summary (Income vs Expense)
+CREATE OR REPLACE VIEW vw_financial_summary AS
+SELECT 
+    DATE_FORMAT(transaction_at, '%Y-%m') AS month,
+    SUM(CASE WHEN transaction_type = 'INCOME' THEN amount ELSE 0 END) AS total_income,
+    SUM(CASE WHEN transaction_type = 'EXPENSE' THEN amount ELSE 0 END) AS total_expense,
+    SUM(CASE WHEN transaction_type = 'INCOME' THEN amount ELSE -amount END) AS net_profit
+FROM FinancialTransaction
+WHERE transaction_at >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+GROUP BY DATE_FORMAT(transaction_at, '%Y-%m')
+ORDER BY month DESC;
+
+-- Inventory Value Summary
+CREATE OR REPLACE VIEW vw_inventory_value AS
+SELECT 
+    pi.item_name,
+    SUM(pb.quantity) AS total_stock,
+    AVG(pb.selling_unit_price) AS avg_selling_price,
+    SUM(pb.quantity * pb.supply_unit_price) AS total_cost_value,
+    SUM(pb.quantity * pb.selling_unit_price) AS total_selling_value,
+    SUM(pb.quantity * (pb.selling_unit_price - pb.supply_unit_price)) AS potential_profit
+FROM PharmacyItem pi
+JOIN PharmacyBatch pb ON pi.item_id = pb.item_id
+WHERE pb.quantity > 0 AND pb.expiry_date > CURDATE()
+GROUP BY pi.item_name
+ORDER BY total_selling_value DESC;
+
+-- Service Popularity
+CREATE OR REPLACE VIEW vw_service_popularity AS
+SELECT 
+    ms.service_name,
+    COUNT(vs.visit_service_id) AS usage_count,
+    SUM(vs.quantity) AS total_quantity,
+    SUM(vs.quantity * ms.service_fee) AS total_revenue
+FROM MedicalService ms
+LEFT JOIN Visit_Service vs ON ms.service_id = vs.service_id
+GROUP BY ms.service_id, ms.service_name
+ORDER BY usage_count DESC;

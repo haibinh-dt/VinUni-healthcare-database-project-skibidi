@@ -7,40 +7,73 @@ DELIMITER $$
 -- 1. Create User
 DROP PROCEDURE IF EXISTS sp_create_user_with_default_password$$
 CREATE PROCEDURE sp_create_user_with_default_password(
-    IN p_username VARCHAR(100), IN p_role_name VARCHAR(50), IN p_admin_id INT,
-    OUT p_new_user_id INT, OUT p_status_code INT, OUT p_message VARCHAR(255)
+    IN p_username VARCHAR(100),
+    IN p_password_hash VARCHAR(255),
+    IN p_role_name VARCHAR(50),
+    IN p_admin_id INT,
+    OUT p_new_user_id INT,
+    OUT p_status_code INT,
+    OUT p_message VARCHAR(255)
 )
 BEGIN
     DECLARE v_auth INT;
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION BEGIN ROLLBACK; SET p_status_code = -1; SET p_message = 'Error creating user'; END;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SET p_status_code = -1;
+        SET p_message = 'Error creating user';
+    END;
+
     SET @current_user_id = p_admin_id;
-    SELECT COUNT(*) INTO v_auth FROM UserRole WHERE user_id = p_admin_id AND role_name = 'ADMIN';
-    IF v_auth = 0 THEN SET p_status_code = 403; SET p_message = 'Forbidden';
+
+    SELECT COUNT(*)
+    INTO v_auth
+    FROM UserRole
+    WHERE user_id = p_admin_id
+      AND role_name = 'ADMIN';
+
+    IF v_auth = 0 THEN
+        SET p_status_code = 403;
+        SET p_message = 'Forbidden';
     ELSE
         START TRANSACTION;
+
         INSERT INTO User (username, password_hash, status, must_change_password)
-        VALUES (p_username, SHA2('Hospital@123', 256), 'ACTIVE', TRUE);
+        VALUES (p_username, p_password_hash, 'ACTIVE', TRUE);
+
         SET p_new_user_id = LAST_INSERT_ID();
-        INSERT INTO UserRole (user_id, role_name) VALUES (p_new_user_id, p_role_name);
+
+        INSERT INTO UserRole (user_id, role_name)
+        VALUES (p_new_user_id, p_role_name);
+
         COMMIT;
-        SET p_status_code = 201; SET p_message = 'User created';
+
+        SET p_status_code = 201;
+        SET p_message = 'User created';
     END IF;
 END$$
 
 -- 2. Change Password
 DROP PROCEDURE IF EXISTS sp_change_password$$
 CREATE PROCEDURE sp_change_password(
-    IN p_user_id INT, IN p_old_pwd VARCHAR(255), IN p_new_pwd VARCHAR(255),
-    OUT p_status_code INT, OUT p_message VARCHAR(255)
+    IN p_user_id INT,
+    IN p_new_password_hash VARCHAR(255),
+    OUT p_status_code INT,
+    OUT p_message VARCHAR(255)
 )
 BEGIN
     SET @current_user_id = p_user_id;
-    IF (SELECT password_hash FROM User WHERE user_id = p_user_id) = SHA2(p_old_pwd, 256) THEN
-        UPDATE User SET password_hash = SHA2(p_new_pwd, 256), must_change_password = FALSE WHERE user_id = p_user_id;
-        SET p_status_code = 200; SET p_message = 'Password updated';
-    ELSE SET p_status_code = 401; SET p_message = 'Old password incorrect';
-    END IF;
+
+    UPDATE User
+    SET password_hash = p_new_password_hash,
+        must_change_password = FALSE
+    WHERE user_id = p_user_id;
+
+    SET p_status_code = 200;
+    SET p_message = 'Password updated';
 END$$
+
 
 -- 3. Update User Role
 DROP PROCEDURE IF EXISTS sp_update_user_role$$
@@ -66,18 +99,34 @@ END$$
 -- 5. Verify Login
 DROP PROCEDURE IF EXISTS sp_verify_login$$
 CREATE PROCEDURE sp_verify_login(
-    IN p_username VARCHAR(100), IN p_password VARCHAR(255), IN p_ip VARCHAR(45),
-    OUT p_user_id INT, OUT p_status_code INT, OUT p_message VARCHAR(255), OUT p_must_change BOOLEAN
+    IN p_username VARCHAR(100),
+    IN p_ip VARCHAR(45),
+    OUT p_user_id INT,
+    OUT p_password_hash VARCHAR(255),
+    OUT p_status_code INT,
+    OUT p_message VARCHAR(255),
+    OUT p_must_change BOOLEAN
 )
 BEGIN
     SET p_user_id = NULL;
-    SELECT user_id, must_change_password INTO p_user_id, p_must_change
-    FROM User WHERE username = p_username AND password_hash = SHA2(p_password, 256) AND status = 'ACTIVE';
+    SET p_password_hash = NULL;
+
+    SELECT user_id, password_hash, must_change_password
+    INTO p_user_id, p_password_hash, p_must_change
+    FROM User
+    WHERE username = p_username
+      AND status = 'ACTIVE'
+    LIMIT 1;
+
     IF p_user_id IS NOT NULL THEN
-        INSERT INTO Login_History (user_id, login_status, ip_address) VALUES (p_user_id, 'SUCCESS', p_ip);
-        SET p_status_code = 200; SET p_message = 'Login successful';
+        INSERT INTO Login_History (user_id, login_status, ip_address)
+        VALUES (p_user_id, 'ATTEMPT', p_ip);
+
+        SET p_status_code = 200;
+        SET p_message = 'User found';
     ELSE
-        SET p_status_code = 401; SET p_message = 'Invalid credentials';
+        SET p_status_code = 404;
+        SET p_message = 'User not found';
     END IF;
 END$$
 
