@@ -150,6 +150,25 @@ JOIN Visit v ON p.patient_id = v.patient_id
 JOIN Doctor d ON v.doctor_id = d.doctor_id
 JOIN Department dept ON d.department_id = dept.department_id;
 
+-- 9b. Doctor's Patient List View
+-- Roles: DOCTOR
+-- UI: List of patients assigned to the doctor with visit stats
+CREATE OR REPLACE VIEW v_doctor_patient_list AS
+SELECT 
+    p.patient_id,
+    p.full_name,
+    p.date_of_birth,
+    p.gender,
+    p.phone,
+    p.email,
+    v.doctor_id,
+    COUNT(v.visit_id) as visit_count,
+    MAX(v.visit_start_time) as last_visit,
+    TIMESTAMPDIFF(YEAR, p.date_of_birth, CURDATE()) as age
+FROM Patient p
+JOIN Visit v ON p.patient_id = v.patient_id
+GROUP BY p.patient_id, v.doctor_id;
+
 -- =========================
 -- SECTION 3: PHARMACY
 -- =========================
