@@ -100,33 +100,52 @@ END$$
 DROP PROCEDURE IF EXISTS sp_verify_login$$
 CREATE PROCEDURE sp_verify_login(
     IN p_username VARCHAR(100),
+    IN p_password_input VARCHAR(255),
     IN p_ip VARCHAR(45),
     OUT p_user_id INT,
-    OUT p_password_hash VARCHAR(255),
+    OUT p_role VARCHAR(50),
     OUT p_status_code INT,
     OUT p_message VARCHAR(255),
     OUT p_must_change BOOLEAN
 )
 BEGIN
-    SET p_user_id = NULL;
-    SET p_password_hash = NULL;
+    DECLARE v_password_hash VARCHAR(255);
 
-    SELECT user_id, password_hash, must_change_password
-    INTO p_user_id, p_password_hash, p_must_change
-    FROM User
-    WHERE username = p_username
-      AND status = 'ACTIVE'
+    SET p_user_id = NULL;
+    SET p_role = NULL;
+    SET p_must_change = 0;
+
+    SELECT u.user_id,
+           u.password_hash,
+           u.must_change_password,
+           r.role_name
+    INTO   p_user_id,
+           v_password_hash,
+           p_must_change,
+           p_role
+    FROM User u
+    LEFT JOIN UserRole r ON r.user_id = u.user_id
+    WHERE u.username = p_username
+      AND u.status = 'ACTIVE'
     LIMIT 1;
 
-    IF p_user_id IS NOT NULL THEN
-        INSERT INTO Login_History (user_id, login_status, ip_address)
-        VALUES (p_user_id, 'ATTEMPT', p_ip);
-
-        SET p_status_code = 200;
-        SET p_message = 'User found';
-    ELSE
+    IF p_user_id IS NULL THEN
         SET p_status_code = 404;
         SET p_message = 'User not found';
+
+    ELSEIF v_password_hash <> SHA2(p_password_input, 256) THEN
+        SET p_status_code = 401;
+        SET p_message = 'Invalid password';
+
+        INSERT INTO Login_History(user_id, login_status, ip_address)
+        VALUES (p_user_id, 'FAILED', p_ip);
+
+    ELSE
+        SET p_status_code = 200;
+        SET p_message = 'Login successful';
+
+        INSERT INTO Login_History(user_id, login_status, ip_address)
+        VALUES (p_user_id, 'SUCCESS', p_ip);
     END IF;
 END$$
 
@@ -401,6 +420,18 @@ CREATE PROCEDURE sp_log_audit_event(IN p_user_id INT, IN p_table VARCHAR(100), I
 BEGIN
     INSERT INTO AuditLog (user_id, table_name, field_name, old_value, new_value, action_type)
     VALUES (p_user_id, p_table, p_field, p_old, p_new, p_action);
+END$$
+
+-- 28. Mark All Notifications as Read
+DROP PROCEDURE IF EXISTS sp_mark_all_notifications_read$$
+CREATE PROCEDURE sp_mark_all_notifications_read (
+    IN p_user_id INT
+)
+BEGIN
+    UPDATE Notification
+    SET is_read = TRUE
+    WHERE user_id = p_user_id
+      AND is_read = FALSE;
 END$$
 
 DELIMITER ;

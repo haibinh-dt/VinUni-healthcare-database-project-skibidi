@@ -133,8 +133,14 @@ JOIN Doctor d ON vd.doctor_id = d.doctor_id;
 -- UI: Holistic view of patient's history across all visits
 CREATE OR REPLACE VIEW v_patient_medical_history AS
 SELECT 
-    p.patient_id, p.full_name, v.visit_id, v.visit_start_time,
-    d.full_name AS consulting_doctor, dept.department_name,
+    p.patient_id, 
+    p.full_name,
+    p.phone,
+    v.visit_id, 
+    v.visit_start_time,
+    d.doctor_id AS consulting_doctor_id,
+    d.full_name AS consulting_doctor, 
+    dept.department_name,
     v.clinical_note,
     (SELECT GROUP_CONCAT(diag.diagnosis_name SEPARATOR '; ') 
      FROM Visit_Diagnosis vd JOIN Diagnosis diag ON vd.diagnosis_id = diag.diagnosis_id 
@@ -308,24 +314,12 @@ FROM User u
 JOIN UserRole ur ON u.user_id = ur.user_id
 JOIN Role r ON ur.role_name = r.role_name;
 
--- 22. Authentication View
--- Roles: SYSTEM
-CREATE OR REPLACE VIEW v_user_auth AS
-SELECT
-    u.user_id,
-    u.username,
-    u.password_hash,
-    u.status,
-    ur.role_name
-FROM User u
-JOIN UserRole ur ON u.user_id = ur.user_id;
-
 -- =====================================================
 -- ANALYTICS VIEWS
 -- =====================================================
 
 -- Daily Appointments Summary
-CREATE OR REPLACE VIEW vw_daily_appointments AS
+CREATE OR REPLACE VIEW v_daily_appointments AS
 SELECT 
     a.appointment_date,
     COUNT(*) AS total_appointments,
@@ -339,7 +333,7 @@ GROUP BY a.appointment_date
 ORDER BY a.appointment_date DESC;
 
 -- Monthly Revenue Summary
-CREATE OR REPLACE VIEW vw_monthly_revenue AS
+CREATE OR REPLACE VIEW v_monthly_revenue AS
 SELECT 
     DATE_FORMAT(pi.invoice_date, '%Y-%m') AS month,
     COUNT(*) AS invoice_count,
@@ -352,7 +346,7 @@ GROUP BY DATE_FORMAT(pi.invoice_date, '%Y-%m')
 ORDER BY month DESC;
 
 -- Drug Usage Trends
-CREATE OR REPLACE VIEW vw_drug_usage_trends AS
+CREATE OR REPLACE VIEW v_drug_usage_trends AS
 SELECT 
     pi.item_name,
     DATE_FORMAT(sm.moved_at, '%Y-%m') AS month,
@@ -367,7 +361,7 @@ GROUP BY pi.item_name, DATE_FORMAT(sm.moved_at, '%Y-%m')
 ORDER BY month DESC, dispensed_quantity DESC;
 
 -- Doctor Performance Summary
-CREATE OR REPLACE VIEW vw_doctor_performance AS
+CREATE OR REPLACE VIEW v_doctor_performance AS
 SELECT 
     d.doctor_id,
     d.full_name AS doctor_name,
@@ -384,7 +378,7 @@ LEFT JOIN Appointment a ON d.doctor_id = a.doctor_id
 GROUP BY d.doctor_id, d.full_name, dept.department_name;
 
 -- Patient Visit Frequency
-CREATE OR REPLACE VIEW vw_patient_visit_frequency AS
+CREATE OR REPLACE VIEW v_patient_visit_frequency AS
 SELECT 
     p.patient_id,
     p.full_name AS patient_name,
@@ -399,7 +393,7 @@ HAVING COUNT(v.visit_id) > 0
 ORDER BY total_visits DESC;
 
 -- Financial Transaction Summary (Income vs Expense)
-CREATE OR REPLACE VIEW vw_financial_summary AS
+CREATE OR REPLACE VIEW v_financial_summary AS
 SELECT 
     DATE_FORMAT(transaction_at, '%Y-%m') AS month,
     SUM(CASE WHEN transaction_type = 'INCOME' THEN amount ELSE 0 END) AS total_income,
@@ -411,7 +405,7 @@ GROUP BY DATE_FORMAT(transaction_at, '%Y-%m')
 ORDER BY month DESC;
 
 -- Inventory Value Summary
-CREATE OR REPLACE VIEW vw_inventory_value AS
+CREATE OR REPLACE VIEW v_inventory_value AS
 SELECT 
     pi.item_name,
     SUM(pb.quantity) AS total_stock,
@@ -426,7 +420,7 @@ GROUP BY pi.item_name
 ORDER BY total_selling_value DESC;
 
 -- Service Popularity
-CREATE OR REPLACE VIEW vw_service_popularity AS
+CREATE OR REPLACE VIEW v_service_popularity AS
 SELECT 
     ms.service_name,
     COUNT(vs.visit_service_id) AS usage_count,
@@ -436,3 +430,25 @@ FROM MedicalService ms
 LEFT JOIN Visit_Service vs ON ms.service_id = vs.service_id
 GROUP BY ms.service_id, ms.service_name
 ORDER BY usage_count DESC;
+
+-- User Notification Summary
+CREATE OR REPLACE VIEW v_user_notifications AS
+SELECT
+    n.notification_id,
+    n.user_id,
+    n.content,
+    n.created_at,
+    n.is_read,
+    nt.type_name
+FROM Notification n
+JOIN Notification_Type nt
+    ON n.notification_type_id = nt.notification_type_id;
+
+-- User Unread Notification Count
+CREATE OR REPLACE VIEW v_user_unread_notification_count AS
+SELECT
+    user_id,
+    COUNT(*) AS unread_count
+FROM Notification
+WHERE is_read = FALSE
+GROUP BY user_id;

@@ -152,6 +152,12 @@ END$$
 
 -- 8. One trigger per table to handle all tracked field changes.
 
+DROP TRIGGER IF EXISTS trg_audit_user_insert$$
+CREATE TRIGGER trg_audit_user_insert AFTER INSERT ON `User` FOR EACH ROW
+BEGIN
+    CALL sp_log_audit_event(COALESCE(@current_user_id, 1), 'User', NULL, NULL, CAST(NEW.user_id AS CHAR), 'INSERT');
+END$$
+
 DROP TRIGGER IF EXISTS trg_audit_user_update$$
 CREATE TRIGGER trg_audit_user_update AFTER UPDATE ON `User` FOR EACH ROW
 BEGIN

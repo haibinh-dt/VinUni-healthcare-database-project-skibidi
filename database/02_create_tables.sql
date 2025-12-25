@@ -123,6 +123,7 @@ CREATE TABLE IF NOT EXISTS Patient (
 
 CREATE TABLE IF NOT EXISTS Doctor (
     doctor_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNIQUE DEFAULT NULL,
     department_id INT NOT NULL,
     full_name VARCHAR(255) NOT NULL,
     title VARCHAR(100),
@@ -132,6 +133,12 @@ CREATE TABLE IF NOT EXISTS Doctor (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     INDEX idx_doctor_department (department_id),
+
+    CONSTRAINT fk_doctor_user
+        FOREIGN KEY (user_id)
+        REFERENCES `User`(user_id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE,
 
     FOREIGN KEY (department_id)
         REFERENCES Department(department_id)
