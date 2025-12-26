@@ -1,5 +1,4 @@
 /* ===========================================================
-   optimization_tests.sql
    Hospital Management System - Indexing & Performance Testing
    Includes: final indexes, seed data, baseline vs optimized tests,
              and cleanup of PERF_TEST data.
