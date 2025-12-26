@@ -40,7 +40,7 @@ SELECT
     CASE 
         WHEN da.available_date = CURDATE() THEN 'Today'
         WHEN da.available_date = DATE_ADD(CURDATE(), INTERVAL 1 DAY) THEN 'Tomorrow'
-        ELSE DATE_FORMAT(da.available_date, '%W')
+        ELSE DATE_FORMAT(da.available_date, '%m/%d/%Y')
     END AS date_label
 FROM Doctor_Availability da
 JOIN Doctor d ON da.doctor_id = d.doctor_id

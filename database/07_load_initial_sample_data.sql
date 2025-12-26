@@ -235,6 +235,35 @@ VALUES
 (6, 5, '2025-12-24', TRUE),
 (7, 6, '2025-12-23', TRUE);
 
+-- Full availability for all doctors on 2025-12-27 and 2025-12-28
+INSERT INTO Doctor_Availability
+(doctor_id, timeslot_id, available_date, is_available)
+VALUES
+-- today
+(2, 1, CURDATE(), TRUE), (2, 2, CURDATE(), TRUE), (2, 3, CURDATE(), TRUE), (2, 4, CURDATE(), TRUE), (2, 5, CURDATE(), TRUE), (2, 6, CURDATE(), TRUE), (2, 7, CURDATE(), TRUE), (2, 8, CURDATE(), TRUE),
+(3, 1, CURDATE(), TRUE), (3, 2, CURDATE(), TRUE), (3, 3, CURDATE(), TRUE), (3, 4, CURDATE(), TRUE), (3, 5, CURDATE(), TRUE), (3, 6, CURDATE(), TRUE), (3, 7, CURDATE(), TRUE), (3, 8, CURDATE(), TRUE),
+(4, 1, CURDATE(), TRUE), (4, 2, CURDATE(), TRUE), (4, 3, CURDATE(), TRUE), (4, 4, CURDATE(), TRUE), (4, 5, CURDATE(), TRUE), (4, 6, CURDATE(), TRUE), (4, 7, CURDATE(), TRUE), (4, 8, CURDATE(), TRUE),
+(7, 1,CURDATE(), TRUE), (7, 2,CURDATE(), TRUE), (7, 3,CURDATE(), TRUE), (7, 4,CURDATE(), TRUE), (7, 5,CURDATE(), TRUE), (7, 6,CURDATE(), TRUE), (7, 7,CURDATE(), TRUE), (7, 8,CURDATE(), TRUE),
+(8, 1,CURDATE(), TRUE), (8, 2,CURDATE(), TRUE), (8, 3,CURDATE(), TRUE), (8, 4,CURDATE(), TRUE), (8, 5,CURDATE(), TRUE), (8, 6,CURDATE(), TRUE), (8, 7,CURDATE(), TRUE), (8, 8,CURDATE(), TRUE),
+-- 2025-12-27
+(1, 1, '2025-12-27', TRUE), (1, 2, '2025-12-27', TRUE), (1, 3, '2025-12-27', TRUE), (1, 4, '2025-12-27', TRUE), (1, 5, '2025-12-27', TRUE), (1, 6, '2025-12-27', TRUE), (1, 7, '2025-12-27', TRUE), (1, 8, '2025-12-27', TRUE),
+(2, 1, '2025-12-27', TRUE), (2, 2, '2025-12-27', TRUE), (2, 3, '2025-12-27', TRUE), (2, 4, '2025-12-27', TRUE), (2, 5, '2025-12-27', TRUE), (2, 6, '2025-12-27', TRUE), (2, 7, '2025-12-27', TRUE), (2, 8, '2025-12-27', TRUE),
+(3, 1, '2025-12-27', TRUE), (3, 2, '2025-12-27', TRUE), (3, 3, '2025-12-27', TRUE), (3, 4, '2025-12-27', TRUE), (3, 5, '2025-12-27', TRUE), (3, 6, '2025-12-27', TRUE), (3, 7, '2025-12-27', TRUE), (3, 8, '2025-12-27', TRUE),
+(4, 1, '2025-12-27', TRUE), (4, 2, '2025-12-27', TRUE), (4, 3, '2025-12-27', TRUE), (4, 4, '2025-12-27', TRUE), (4, 5, '2025-12-27', TRUE), (4, 6, '2025-12-27', TRUE), (4, 7, '2025-12-27', TRUE), (4, 8, '2025-12-27', TRUE),
+(5, 1, '2025-12-27', TRUE), (5, 2, '2025-12-27', TRUE), (5, 3, '2025-12-27', TRUE), (5, 4, '2025-12-27', TRUE), (5, 5, '2025-12-27', TRUE), (5, 6, '2025-12-27', TRUE), (5, 7, '2025-12-27', TRUE), (5, 8, '2025-12-27', TRUE),
+(6, 1, '2025-12-27', TRUE), (6, 2, '2025-12-27', TRUE), (6, 3, '2025-12-27', TRUE), (6, 4, '2025-12-27', TRUE), (6, 5, '2025-12-27', TRUE), (6, 6, '2025-12-27', TRUE), (6, 7, '2025-12-27', TRUE), (6, 8, '2025-12-27', TRUE),
+(7, 1, '2025-12-27', TRUE), (7, 2, '2025-12-27', TRUE), (7, 3, '2025-12-27', TRUE), (7, 4, '2025-12-27', TRUE), (7, 5, '2025-12-27', TRUE), (7, 6, '2025-12-27', TRUE), (7, 7, '2025-12-27', TRUE), (7, 8, '2025-12-27', TRUE),
+(8, 1, '2025-12-27', TRUE), (8, 2, '2025-12-27', TRUE), (8, 3, '2025-12-27', TRUE), (8, 4, '2025-12-27', TRUE), (8, 5, '2025-12-27', TRUE), (8, 6, '2025-12-27', TRUE), (8, 7, '2025-12-27', TRUE), (8, 8, '2025-12-27', TRUE),
+-- 2025-12-28
+(1, 1, '2025-12-28', TRUE), (1, 2, '2025-12-28', TRUE), (1, 3, '2025-12-28', TRUE), (1, 4, '2025-12-28', TRUE), (1, 5, '2025-12-28', TRUE), (1, 6, '2025-12-28', TRUE), (1, 7, '2025-12-28', TRUE), (1, 8, '2025-12-28', TRUE),
+(2, 1, '2025-12-28', TRUE), (2, 2, '2025-12-28', TRUE), (2, 3, '2025-12-28', TRUE), (2, 4, '2025-12-28', TRUE), (2, 5, '2025-12-28', TRUE), (2, 6, '2025-12-28', TRUE), (2, 7, '2025-12-28', TRUE), (2, 8, '2025-12-28', TRUE),
+(3, 1, '2025-12-28', TRUE), (3, 2, '2025-12-28', TRUE), (3, 3, '2025-12-28', TRUE), (3, 4, '2025-12-28', TRUE), (3, 5, '2025-12-28', TRUE), (3, 6, '2025-12-28', TRUE), (3, 7, '2025-12-28', TRUE), (3, 8, '2025-12-28', TRUE),
+(4, 1, '2025-12-28', TRUE), (4, 2, '2025-12-28', TRUE), (4, 3, '2025-12-28', TRUE), (4, 4, '2025-12-28', TRUE), (4, 5, '2025-12-28', TRUE), (4, 6, '2025-12-28', TRUE), (4, 7, '2025-12-28', TRUE), (4, 8, '2025-12-28', TRUE),
+(5, 1, '2025-12-28', TRUE), (5, 2, '2025-12-28', TRUE), (5, 3, '2025-12-28', TRUE), (5, 4, '2025-12-28', TRUE), (5, 5, '2025-12-28', TRUE), (5, 6, '2025-12-28', TRUE), (5, 7, '2025-12-28', TRUE), (5, 8, '2025-12-28', TRUE),
+(6, 1, '2025-12-28', TRUE), (6, 2, '2025-12-28', TRUE), (6, 3, '2025-12-28', TRUE), (6, 4, '2025-12-28', TRUE), (6, 5, '2025-12-28', TRUE), (6, 6, '2025-12-28', TRUE), (6, 7, '2025-12-28', TRUE), (6, 8, '2025-12-28', TRUE),
+(7, 1, '2025-12-28', TRUE), (7, 2, '2025-12-28', TRUE), (7, 3, '2025-12-28', TRUE), (7, 4, '2025-12-28', TRUE), (7, 5, '2025-12-28', TRUE), (7, 6, '2025-12-28', TRUE), (7, 7, '2025-12-28', TRUE), (7, 8, '2025-12-28', TRUE),
+(8, 1, '2025-12-28', TRUE), (8, 2, '2025-12-28', TRUE), (8, 3, '2025-12-28', TRUE), (8, 4, '2025-12-28', TRUE), (8, 5, '2025-12-28', TRUE), (8, 6, '2025-12-28', TRUE), (8, 7, '2025-12-28', TRUE), (8, 8, '2025-12-28', TRUE);
+
 INSERT INTO Appointment
 (patient_id, doctor_id, timeslot_id, appointment_date, reason, current_status)
 VALUES
@@ -269,6 +298,40 @@ VALUES
 (4, 1, 1, '2025-12-11', 'Cholesterol recheck', 'COMPLETED'),       -- ID: 29
 (5, 2, 2, '2025-12-10', 'Hernia repair consultation', 'COMPLETED');-- ID: 30
 
+-- Additional appointments for July to November 2025
+INSERT INTO Appointment
+(patient_id, doctor_id, timeslot_id, appointment_date, reason, current_status)
+VALUES
+-- July 2025
+(1, 1, 1, '2025-07-01', 'General check-up', 'COMPLETED'),
+(2, 2, 2, '2025-07-08', 'Surgery follow-up', 'COMPLETED'),
+(3, 3, 3, '2025-07-15', 'Pediatric consultation', 'COMPLETED'),
+(4, 4, 4, '2025-07-22', 'Neurology evaluation', 'COMPLETED'),
+(5, 5, 1, '2025-07-29', 'Orthopedic assessment', 'COMPLETED'),
+-- August 2025
+(6, 6, 2, '2025-08-05', 'Cardiology screening', 'COMPLETED'),
+(7, 7, 3, '2025-08-12', 'Obstetric check', 'COMPLETED'),
+(8, 8, 4, '2025-08-19', 'Emergency care', 'COMPLETED'),
+(9, 1, 1, '2025-08-26', 'Internal medicine', 'COMPLETED'),
+(10, 2, 2, '2025-09-02', 'Surgical consultation', 'COMPLETED'),
+-- September 2025
+(1, 3, 3, '2025-09-09', 'Child health check', 'COMPLETED'),
+(2, 4, 4, '2025-09-16', 'Neurological exam', 'COMPLETED'),
+(3, 5, 1, '2025-09-23', 'Bone injury check', 'COMPLETED'),
+(4, 6, 2, '2025-09-30', 'Heart monitoring', 'COMPLETED'),
+(5, 7, 3, '2025-10-07', 'Pregnancy care', 'COMPLETED'),
+-- October 2025
+(6, 8, 4, '2025-10-14', 'Emergency treatment', 'COMPLETED'),
+(7, 1, 1, '2025-10-21', 'General consultation', 'COMPLETED'),
+(8, 2, 2, '2025-10-28', 'Post-op care', 'COMPLETED'),
+(9, 3, 3, '2025-11-04', 'Pediatric visit', 'COMPLETED'),
+(10, 4, 4, '2025-11-11', 'Brain scan review', 'COMPLETED'),
+-- November 2025
+(1, 5, 1, '2025-11-18', 'Joint therapy', 'COMPLETED'),
+(2, 6, 2, '2025-11-25', 'Cardiac evaluation', 'COMPLETED'),
+(3, 7, 3, '2025-12-02', 'Maternity check', 'COMPLETED'),
+(4, 8, 4, '2025-12-09', 'Urgent care', 'COMPLETED');
+
 INSERT INTO Visit
 (appointment_id, patient_id, doctor_id, visit_start_time, visit_end_time, clinical_note)
 VALUES
@@ -301,6 +364,40 @@ VALUES
 (28, 3, 7, '2025-12-11 14:00:00', '2025-12-11 14:45:00', 'Third trimester: Baby in position.'),
 (30, 5, 2, '2025-12-10 16:00:00', '2025-12-10 17:00:00', 'Hernia repair: Surgery scheduled.');
 
+-- Additional visits for July to November 2025 appointments
+INSERT INTO Visit
+(appointment_id, patient_id, doctor_id, visit_start_time, visit_end_time, clinical_note)
+VALUES
+-- July 2025
+(31, 1, 1, '2025-07-01 08:00:00', '2025-07-01 08:30:00', 'General check-up: All vitals normal.'),
+(32, 2, 2, '2025-07-08 08:00:00', '2025-07-08 08:30:00', 'Surgery follow-up: Recovery progressing well.'),
+(33, 3, 3, '2025-07-15 08:00:00', '2025-07-15 08:30:00', 'Pediatric consultation: Growth on track.'),
+(34, 4, 4, '2025-07-22 08:00:00', '2025-07-22 08:30:00', 'Neurology evaluation: No concerns.'),
+(35, 5, 5, '2025-07-29 08:00:00', '2025-07-29 08:30:00', 'Orthopedic assessment: Mild arthritis.'),
+-- August 2025
+(36, 6, 6, '2025-08-05 08:00:00', '2025-08-05 08:30:00', 'Cardiology screening: Heart healthy.'),
+(37, 7, 7, '2025-08-12 08:00:00', '2025-08-12 08:30:00', 'Obstetric check: Pregnancy normal.'),
+(38, 8, 8, '2025-08-19 08:00:00', '2025-08-19 08:30:00', 'Emergency care: Treated and discharged.'),
+(39, 9, 1, '2025-08-26 08:00:00', '2025-08-26 08:30:00', 'Internal medicine: Chronic condition managed.'),
+(40, 10, 2, '2025-09-02 08:00:00', '2025-09-02 08:30:00', 'Surgical consultation: Procedure planned.'),
+-- September 2025
+(41, 1, 3, '2025-09-09 08:00:00', '2025-09-09 08:30:00', 'Child health check: Vaccinations updated.'),
+(42, 2, 4, '2025-09-16 08:00:00', '2025-09-16 08:30:00', 'Neurological exam: Follow-up needed.'),
+(43, 3, 5, '2025-09-23 08:00:00', '2025-09-23 08:30:00', 'Bone injury check: Healing well.'),
+(44, 4, 6, '2025-09-30 08:00:00', '2025-09-30 08:30:00', 'Heart monitoring: Stable rhythm.'),
+(45, 5, 7, '2025-10-07 08:00:00', '2025-10-07 08:30:00', 'Pregnancy care: Second trimester.'),
+-- October 2025
+(46, 6, 8, '2025-10-14 08:00:00', '2025-10-14 08:30:00', 'Emergency treatment: Stabilized.'),
+(47, 7, 1, '2025-10-21 08:00:00', '2025-10-21 08:30:00', 'General consultation: Prescribed medication.'),
+(48, 8, 2, '2025-10-28 08:00:00', '2025-10-28 08:30:00', 'Post-op care: Incision healing.'),
+(49, 9, 3, '2025-11-04 08:00:00', '2025-11-04 08:30:00', 'Pediatric visit: Development normal.'),
+(50, 10, 4, '2025-11-11 08:00:00', '2025-11-11 08:30:00', 'Brain scan review: No abnormalities.'),
+-- November 2025
+(51, 1, 5, '2025-11-18 08:00:00', '2025-11-18 08:30:00', 'Joint therapy: Improved mobility.'),
+(52, 2, 6, '2025-11-25 08:00:00', '2025-11-25 08:30:00', 'Cardiac evaluation: Medication adjusted.'),
+(53, 3, 7, '2025-12-02 08:00:00', '2025-12-02 08:30:00', 'Maternity check: Fetal growth good.'),
+(54, 4, 8, '2025-12-09 08:00:00', '2025-12-09 08:30:00', 'Urgent care: Condition resolved.');
+
 INSERT INTO Visit_Service
 (visit_id, service_id, quantity)
 VALUES
@@ -319,6 +416,35 @@ VALUES
 (13, 13, 1),
 (14, 14, 1),
 (15, 15, 1);
+
+-- Additional Visit_Service for new visits 31-55
+INSERT INTO Visit_Service
+(visit_id, service_id, quantity)
+VALUES
+(31, 1, 1),
+(32, 2, 1),
+(33, 1, 1),
+(34, 2, 1),
+(35, 2, 1),
+(36, 2, 1),
+(37, 9, 1),
+(38, 1, 1),
+(39, 1, 1),
+(40, 2, 1),
+(41, 1, 1),
+(42, 2, 1),
+(43, 2, 1),
+(44, 10, 1),
+(45, 9, 1),
+(46, 1, 1),
+(47, 1, 1),
+(48, 2, 1),
+(49, 1, 1),
+(50, 11, 1),
+(51, 2, 1),
+(52, 2, 1),
+(53, 9, 1),
+(54, 1, 1);
 
 INSERT INTO Diagnosis (diagnosis_code, diagnosis_name, description)
 VALUES
@@ -357,6 +483,35 @@ VALUES
 (14, 9, 1, 'Prenatal visit - healthy pregnancy progress'),
 (15, 1, 1, 'Blood pressure monitoring - well controlled');
 
+-- Additional Visit_Diagnosis for new visits 31-55
+INSERT INTO Visit_Diagnosis
+(visit_id, diagnosis_id, doctor_id, doctor_note)
+VALUES
+(31, 1, 1, 'Routine check-up - blood pressure normal'),
+(32, 11, 2, 'Post-surgery follow-up - recovery on track'),
+(33, 3, 3, 'Pediatric assessment - healthy growth'),
+(34, 13, 4, 'Neurological evaluation - no issues found'),
+(35, 14, 5, 'Orthopedic check - mild arthritis managed'),
+(36, 8, 6, 'Cardiology screening - heart healthy'),
+(37, 9, 7, 'Obstetric visit - normal pregnancy'),
+(38, 2, 8, 'Emergency care - infection treated'),
+(39, 10, 1, 'Internal medicine - diabetes controlled'),
+(40, 11, 2, 'Surgical consultation - procedure scheduled'),
+(41, 12, 3, 'Child health - vaccinations completed'),
+(42, 13, 4, 'Neurological exam - follow-up required'),
+(43, 14, 5, 'Bone injury - healing progressing'),
+(44, 8, 6, 'Heart monitoring - stable condition'),
+(45, 9, 7, 'Pregnancy care - second trimester check'),
+(46, 2, 8, 'Emergency treatment - patient stabilized'),
+(47, 1, 1, 'General consultation - medication prescribed'),
+(48, 11, 2, 'Post-op care - incision healing well'),
+(49, 3, 3, 'Pediatric visit - development normal'),
+(50, 13, 4, 'Brain scan review - no abnormalities'),
+(51, 14, 5, 'Joint therapy - mobility improved'),
+(52, 8, 6, 'Cardiac evaluation - medication adjusted'),
+(53, 9, 7, 'Maternity check - fetal growth good'),
+(54, 2, 8, 'Urgent care - condition resolved');
+
 INSERT INTO Prescription
 (visit_id, doctor_id, note)
 VALUES
@@ -366,6 +521,17 @@ VALUES
 (11, 1, 'Headache pain management'),
 (13, 6, 'Heart rhythm control'),
 (15, 1, 'Hypertension maintenance therapy');
+
+-- Additional Prescriptions for new visits
+INSERT INTO Prescription
+(visit_id, doctor_id, note)
+VALUES
+(31, 1, 'Blood pressure maintenance'),
+(36, 6, 'Cardiac health supplements'),
+(39, 1, 'Diabetes management medication'),
+(44, 6, 'Heart rhythm medication'),
+(47, 1, 'General health medication'),
+(52, 6, 'Cardiac medication adjustment');
 
 INSERT INTO Prescription_Item
 (prescription_id, item_id, quantity, dosage, usage_instruction)
@@ -377,6 +543,17 @@ VALUES
 (5, 6, 60, '5mg', 'Once daily'),
 (6, 6, 30, '5mg', 'Once daily');
 
+-- Additional Prescription_Item for new prescriptions
+INSERT INTO Prescription_Item
+(prescription_id, item_id, quantity, dosage, usage_instruction)
+VALUES
+(7, 6, 30, '5mg', 'Once daily for blood pressure'),
+(8, 7, 30, '10mg', 'Once daily for cholesterol'),
+(9, 5, 60, '500mg', 'Twice daily for diabetes'),
+(10, 6, 30, '5mg', 'Once daily for heart rhythm'),
+(11, 1, 20, '500mg', 'As needed for pain'),
+(12, 6, 30, '5mg', 'Once daily for cardiac health');
+
 INSERT INTO PharmacyBatch
 (item_id, supplier_id, batch_number, expiry_date, selling_unit_price, supply_unit_price, quantity)
 VALUES
@@ -385,9 +562,19 @@ VALUES
 (8, 2, 'BATCH-CETI-01', '2026-12-31', 1200, 700, 100),
 (2, 3, 'BATCH-AMOX-01', '2026-08-20', 2500, 1500, 150),
 (3, 5, 'BATCH-IBUP-01', '2026-10-10', 1800, 1000, 120),
-(4, 1, 'BATCH-OMEP-01', '2026-11-05', 3000, 1800, 80),
-(5, 2, 'BATCH-METF-01', '2026-07-25', 2200, 1300, 90),
+(4, 1, 'BATCH-OMEP-01', '2026-11-05', 3000, 1800, 10),
+(5, 2, 'BATCH-METF-01', '2025-12-31', 2200, 1300, 90),
 (7, 3, 'BATCH-ATOR-01', '2026-09-30', 2800, 1600, 70);
+
+INSERT INTO SupplierInvoice (supplier_id, batch_id, invoice_date, total_amount, status) VALUES
+(1, 1, '2025-12-15', 160000, 'PAID'),
+(4, 2, '2025-12-15', 60000, 'PAID'),
+(2, 3, '2025-01-15', 70000, 'PAID'),
+(3, 4, '2025-01-15', 225000, 'PAID'),
+(5, 5, '2025-01-15', 120000, 'PAID'),
+(1, 6, '2025-01-15', 144000, 'PAID'),
+(2, 7, '2025-01-15', 117000, 'PAID'),
+(3, 8, '2025-01-15', 112000, 'PAID');
 
 INSERT INTO PatientInvoice
 (visit_id, invoice_date, total_amount, status)
@@ -408,6 +595,35 @@ VALUES
 (14, '2025-12-17', 300000, 'PAID'),
 (15, '2025-12-17', 150000, 'PAID');
 
+-- Additional PatientInvoice for new visits 31-55
+INSERT INTO PatientInvoice
+(visit_id, invoice_date, total_amount, status)
+VALUES
+(31, '2025-07-01', 150000, 'PAID'),
+(32, '2025-07-08', 300000, 'PAID'),
+(33, '2025-07-15', 150000, 'NOT PAID'),
+(34, '2025-07-22', 300000, 'PAID'),
+(35, '2025-07-29', 300000, 'PAID'),
+(36, '2025-08-05', 300000, 'NOT PAID'),
+(37, '2025-08-12', 350000, 'PAID'),
+(38, '2025-08-19', 150000, 'PAID'),
+(39, '2025-08-26', 150000, 'NOT PAID'),
+(40, '2025-09-02', 300000, 'PAID'),
+(41, '2025-09-09', 150000, 'PAID'),
+(42, '2025-09-16', 300000, 'NOT PAID'),
+(43, '2025-09-23', 300000, 'PAID'),
+(44, '2025-09-30', 150000, 'PAID'),
+(45, '2025-10-07', 350000, 'NOT PAID'),
+(46, '2025-10-14', 150000, 'PAID'),
+(47, '2025-10-21', 150000, 'PAID'),
+(48, '2025-10-28', 300000, 'NOT PAID'),
+(49, '2025-11-04', 150000, 'PAID'),
+(50, '2025-11-11', 2000000, 'PAID'),
+(51, '2025-11-18', 300000, 'NOT PAID'),
+(52, '2025-11-25', 300000, 'PAID'),
+(53, '2025-12-02', 350000, 'PAID'),
+(54, '2025-12-09', 150000, 'NOT PAID');
+
 INSERT INTO PatientInvoice_Item
 (patient_invoice_id, item_type, reference_id, quantity, unit_price, line_total)
 VALUES
@@ -427,6 +643,36 @@ VALUES
 (14, 'SERVICE', 14, 1, 300000, 300000),
 (15, 'SERVICE', 15, 1, 150000, 150000);
 
+-- Additional PatientInvoice_Item for new invoices 16-40
+INSERT INTO PatientInvoice_Item
+(patient_invoice_id, item_type, reference_id, quantity, unit_price, line_total)
+VALUES
+(16, 'SERVICE', 1, 1, 150000, 150000),
+(17, 'SERVICE', 2, 1, 300000, 300000),
+(18, 'SERVICE', 1, 1, 150000, 150000),
+(19, 'SERVICE', 2, 1, 300000, 300000),
+(20, 'SERVICE', 2, 1, 300000, 300000),
+(21, 'SERVICE', 2, 1, 300000, 300000),
+(22, 'SERVICE', 9, 1, 350000, 350000),
+(23, 'SERVICE', 1, 1, 150000, 150000),
+(24, 'SERVICE', 1, 1, 150000, 150000),
+(25, 'SERVICE', 2, 1, 300000, 300000),
+(26, 'SERVICE', 1, 1, 150000, 150000),
+(27, 'SERVICE', 2, 1, 300000, 300000),
+(28, 'SERVICE', 2, 1, 300000, 300000),
+(29, 'SERVICE', 10, 1, 150000, 150000),
+(30, 'SERVICE', 9, 1, 350000, 350000),
+(31, 'SERVICE', 1, 1, 150000, 150000),
+(32, 'SERVICE', 1, 1, 150000, 150000),
+(33, 'SERVICE', 2, 1, 300000, 300000),
+(34, 'SERVICE', 1, 1, 150000, 150000),
+(35, 'SERVICE', 11, 1, 2000000, 2000000),
+(36, 'SERVICE', 2, 1, 300000, 300000),
+(37, 'SERVICE', 2, 1, 300000, 300000),
+(38, 'SERVICE', 9, 1, 350000, 350000),
+(39, 'SERVICE', 1, 1, 150000, 150000),
+(40, 'SERVICE', 1, 1, 150000, 150000);
+
 INSERT INTO Payment
 (invoice_id, amount, payment_method)
 VALUES
@@ -445,6 +691,28 @@ VALUES
 (14, 300000, 'CASH'),
 (15, 150000, 'CARD');
 
+-- Additional Payment for new PAID invoices
+INSERT INTO Payment
+(invoice_id, amount, payment_method)
+VALUES
+(16, 150000, 'CASH'),
+(17, 300000, 'CARD'),
+(19, 300000, 'CASH'),
+(20, 300000, 'CARD'),
+(22, 350000, 'CASH'),
+(23, 150000, 'CARD'),
+(25, 300000, 'CASH'),
+(26, 150000, 'CARD'),
+(28, 300000, 'CASH'),
+(29, 150000, 'CARD'),
+(31, 150000, 'CASH'),
+(32, 150000, 'CARD'),
+(34, 150000, 'CASH'),
+(35, 2000000, 'CARD'),
+(37, 300000, 'CASH'),
+(38, 350000, 'CARD'),
+(40, 150000, 'CASH');
+
 
 INSERT INTO Notification (user_id, notification_type_id, content, is_read, created_at) VALUES 
 (9, 1, 'New appointment scheduled for Nguyen Thi Hoa', FALSE, '2025-12-22 09:00:00'),
@@ -460,6 +728,49 @@ INSERT INTO Notification (user_id, notification_type_id, content, is_read, creat
 (9, 9, 'Stock expiry warning: Amoxicillin batch expires in 30 days', TRUE, '2025-12-24 09:00:00'),
 (12, 1, 'Appointment confirmed: Pediatric check-up for Hoang Thi Lan', FALSE, '2025-12-16 13:30:00'),
 (1, 11, 'Invoice overdue: Visit #3 - Le Thi Mai', TRUE, '2025-12-25 10:00:00');
+
+INSERT INTO FinancialTransaction (transaction_type, reference_type, reference_id, amount, transaction_at, description) VALUES
+-- Supplier invoice expenses
+('EXPENSE', 'SUPPLIER_INVOICE', 1, 160000, '2025-01-15', 'Payment for Paracetamol batch'),
+('EXPENSE', 'SUPPLIER_INVOICE', 2, 60000, '2025-01-15', 'Payment for Amlodipine batch'),
+('EXPENSE', 'SUPPLIER_INVOICE', 3, 70000, '2025-01-15', 'Payment for Cetirizine batch'),
+('EXPENSE', 'SUPPLIER_INVOICE', 4, 225000, '2025-01-15', 'Payment for Amoxicillin batch'),
+('EXPENSE', 'SUPPLIER_INVOICE', 5, 120000, '2025-01-15', 'Payment for Ibuprofen batch'),
+('EXPENSE', 'SUPPLIER_INVOICE', 6, 144000, '2025-01-15', 'Payment for Omeprazole batch'),
+('EXPENSE', 'SUPPLIER_INVOICE', 7, 117000, '2025-01-15', 'Payment for Metformin batch'),
+('EXPENSE', 'SUPPLIER_INVOICE', 8, 112000, '2025-01-15', 'Payment for Atorvastatin batch'),
+-- Patient invoice incomes
+('INCOME', 'PATIENT_INVOICE', 1, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 2, 300000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 4, 200000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 5, 250000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 6, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 7, 350000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 8, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 9, 300000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 10, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 11, 200000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 12, 250000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 13, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 14, 300000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 15, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 16, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 17, 300000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 19, 300000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 20, 300000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 22, 350000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 23, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 25, 300000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 26, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 28, 300000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 29, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 31, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 32, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 34, 150000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 35, 2000000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 37, 300000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 38, 350000, CURDATE(), 'Patient payment received'),
+('INCOME', 'PATIENT_INVOICE', 40, 150000, CURDATE(), 'Patient payment received');
 
 -- Re-enable foreign key checks
 SET FOREIGN_KEY_CHECKS = 1;
