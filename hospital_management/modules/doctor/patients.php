@@ -204,7 +204,7 @@ $pageScripts = <<<'JS'
         const modal = new bootstrap.Modal(document.getElementById('patientDetailModal'));
         const content = document.getElementById('patientDetailContent');
         
-        // Hiển thị loading spinner
+        
         content.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"></div></div>';
         modal.show();
         

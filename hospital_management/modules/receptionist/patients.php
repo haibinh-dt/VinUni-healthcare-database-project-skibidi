@@ -21,9 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $result = $conn->query("SELECT @pid as patient_id, @status as status, @msg as message")->fetch();
         
         if ($result['status'] == 201) {
-            setFlashMessage('Patient registered successfully! Patient ID: ' . $result['patient_id'], 'success');
+            // Directly setting the session array
+            $_SESSION['flash_message'] = [
+                'text' => 'Patient registered successfully! Patient ID: ' . $result['patient_id'],
+                'type' => 'success'
+            ];
         } else {
-            setFlashMessage('Error: ' . $result['message'], 'danger');
+            $_SESSION['flash_message'] = [
+                'text' => 'Error: ' . $result['message'],
+                'type' => 'danger'
+            ];
         }
     } catch (Exception $e) {
         setFlashMessage('Error registering patient: ' . $e->getMessage(), 'danger');
@@ -233,15 +240,75 @@ requireRole('RECEPTIONIST');
     </div>
 </div>
 
+<!-- Patient Detail Modal -->
+<div class="modal fade" id="patientDetailModal" tabindex="-1" aria-labelledby="patientDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="patientDetailModalLabel">
+                    <i class="fas fa-user-medical"></i> Patient Medical Record
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="patientDetailContent">
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
-$pageScripts = "
+$pageScripts = <<<'JS'
 <script>
     function viewPatientDetails(patientId) {
-        // In a full implementation, this would show a modal with patient history
-        alert('Patient details view - Patient ID: ' + patientId + '\\n\\nIn full implementation, this would show:\\n- Complete medical history\\n- Past visits\\n- Prescriptions\\n- Test results');
+        // Initialize the Bootstrap Modal
+        const modalElement = document.getElementById('patientDetailModal');
+        const modal = new bootstrap.Modal(modalElement);
+        const content = document.getElementById('patientDetailContent');
+        
+        // Show loading spinner immediately
+        content.innerHTML = '<div class="text-center my-5"><div class="spinner-border text-info" role="status"></div><p class="mt-2">Fetching medical records...</p></div>';
+        modal.show();
+        
+        // Fetch data from your API
+        fetch('/hospital_management/api/get_patient_emr.php?patient_id=' + patientId)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.details) {
+                    const p = data.details;
+                    content.innerHTML = `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="small text-muted">Full Name</label>
+                                <h6 class="border-bottom pb-2">${p.full_name}</h6>
+                                <label class="small text-muted">Gender</label>
+                                <h6 class="border-bottom pb-2">${p.gender}</h6>
+                                <label class="small text-muted">Date of Birth</label>
+                                <h6 class="border-bottom pb-2">${p.date_of_birth}</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small text-muted">Phone Number</label>
+                                <h6 class="border-bottom pb-2">${p.phone}</h6>
+                                <label class="small text-muted">Email Address</label>
+                                <h6 class="border-bottom pb-2">${p.email || 'No email provided'}</h6>
+                                <label class="small text-muted">Residential Address</label>
+                                <h6 class="border-bottom pb-2">${p.address}</h6>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    content.innerHTML = '<div class="alert alert-warning">No details found for this patient.</div>';
+                }
+            })
+            .catch(err => {
+                content.innerHTML = '<div class="alert alert-danger">Error connecting to server. Please try again.</div>';
+            });
     }
 </script>
-";
+JS;
 
+echo $pageScripts; // This sends the JS to the browser
 require_once '../../includes/footer.php';
 ?>

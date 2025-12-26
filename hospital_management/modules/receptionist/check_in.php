@@ -1,9 +1,6 @@
 <?php
-$pageTitle = "Patient Check-In";
-require_once '../../includes/header.php';
 require_once '../../config/database.php';
-
-requireRole('RECEPTIONIST');
+session_start(); // Ensure session is started for Flash Messages
 
 $db = new Database();
 $conn = $db->getConnection();
@@ -13,15 +10,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $appointmentId = $_POST['appointment_id'];
     
     try {
-        $db->setCurrentUser($_SESSION['user_id']);
         $stmt = $conn->prepare("CALL sp_confirm_appointment(?, ?, @status, @msg)");
         $stmt->execute([$appointmentId, $_SESSION['user_id']]);
         
-        setFlashMessage('Patient checked in successfully', 'success');
+        $_SESSION['flash_message'] = [
+            'text' => 'Patient checked in successfully', 
+            'type' => 'success'
+        ];
+        
         header("Location: check_in.php");
         exit();
     } catch (Exception $e) {
-        setFlashMessage('Error: ' . $e->getMessage(), 'danger');
+        $_SESSION['flash_message'] = [
+            'text' => 'Error: ' . $e->getMessage(), 
+            'type' => 'danger'
+        ];
     }
 }
 
@@ -32,6 +35,12 @@ $stmt = $conn->query("
     ORDER BY start_time
 ");
 $pendingCheckIns = $stmt->fetchAll();
+
+$pageTitle = "Patient Check-In";
+require_once '../../includes/header.php';
+require_once '../../config/database.php';
+
+requireRole('RECEPTIONIST');
 ?>
 
 <h2><i class="fas fa-clipboard-check"></i> Patient Check-In System</h2>
