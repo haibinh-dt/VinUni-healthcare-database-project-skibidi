@@ -17,7 +17,7 @@
 USE hospital_management_system;
 
 -- ============================================================
--- A) QUICK CHECKS (optional but helpful)
+-- A) QUICK CHECKS
 -- ============================================================
 
 -- 1) Confirm which schema you're using
@@ -25,14 +25,6 @@ SELECT DATABASE() AS current_db;
 
 -- 2) Confirm server version
 SELECT VERSION() AS mysql_server_version;
-
--- 3) List partitioned tables in current schema (after you run this file)
--- SELECT DISTINCT TABLE_NAME
--- FROM information_schema.PARTITIONS
--- WHERE TABLE_SCHEMA = DATABASE()
---   AND PARTITION_NAME IS NOT NULL
--- ORDER BY TABLE_NAME;
-
 
 -- ============================================================
 -- B) APPLY REAL PARTITIONING (FK-SAFE TABLE)
@@ -74,12 +66,8 @@ WHERE TABLE_SCHEMA = DATABASE()
   AND PARTITION_NAME IS NOT NULL
 ORDER BY PARTITION_ORDINAL_POSITION;
 
-
 -- ============================================================
 -- C) CREATE PARTITIONED REPORT TABLES (NO FKs)
---    Reason: Your real tables Appointment/AuditLog/StockMovement
---    have foreign keys. MySQL forbids partitioning with FKs.
---    Workaround: create FK-free shadow tables dedicated for reports.
 -- ============================================================
 
 /* ---- C1) appointment_report_part (shadow of Appointment) ---- */
