@@ -240,11 +240,11 @@ INSERT INTO Doctor_Availability
 (doctor_id, timeslot_id, available_date, is_available)
 VALUES
 -- today
-(2, 1, CURDATE(), TRUE), (2, 2, CURDATE(), TRUE), (2, 3, CURDATE(), TRUE), (2, 4, CURDATE(), TRUE), (2, 5, CURDATE(), TRUE), (2, 6, CURDATE(), TRUE), (2, 7, CURDATE(), TRUE), (2, 8, CURDATE(), TRUE),
-(3, 1, CURDATE(), TRUE), (3, 2, CURDATE(), TRUE), (3, 3, CURDATE(), TRUE), (3, 4, CURDATE(), TRUE), (3, 5, CURDATE(), TRUE), (3, 6, CURDATE(), TRUE), (3, 7, CURDATE(), TRUE), (3, 8, CURDATE(), TRUE),
-(4, 1, CURDATE(), TRUE), (4, 2, CURDATE(), TRUE), (4, 3, CURDATE(), TRUE), (4, 4, CURDATE(), TRUE), (4, 5, CURDATE(), TRUE), (4, 6, CURDATE(), TRUE), (4, 7, CURDATE(), TRUE), (4, 8, CURDATE(), TRUE),
-(7, 1,CURDATE(), TRUE), (7, 2,CURDATE(), TRUE), (7, 3,CURDATE(), TRUE), (7, 4,CURDATE(), TRUE), (7, 5,CURDATE(), TRUE), (7, 6,CURDATE(), TRUE), (7, 7,CURDATE(), TRUE), (7, 8,CURDATE(), TRUE),
-(8, 1,CURDATE(), TRUE), (8, 2,CURDATE(), TRUE), (8, 3,CURDATE(), TRUE), (8, 4,CURDATE(), TRUE), (8, 5,CURDATE(), TRUE), (8, 6,CURDATE(), TRUE), (8, 7,CURDATE(), TRUE), (8, 8,CURDATE(), TRUE),
+(2, 8, CURDATE(), TRUE),
+(3, 8, CURDATE(), TRUE),
+(4, 8, CURDATE(), TRUE),
+(7, 8,CURDATE(), TRUE),
+(8, 8,CURDATE(), TRUE),
 -- 2025-12-27
 (1, 1, '2025-12-27', TRUE), (1, 2, '2025-12-27', TRUE), (1, 3, '2025-12-27', TRUE), (1, 4, '2025-12-27', TRUE), (1, 5, '2025-12-27', TRUE), (1, 6, '2025-12-27', TRUE), (1, 7, '2025-12-27', TRUE), (1, 8, '2025-12-27', TRUE),
 (2, 1, '2025-12-27', TRUE), (2, 2, '2025-12-27', TRUE), (2, 3, '2025-12-27', TRUE), (2, 4, '2025-12-27', TRUE), (2, 5, '2025-12-27', TRUE), (2, 6, '2025-12-27', TRUE), (2, 7, '2025-12-27', TRUE), (2, 8, '2025-12-27', TRUE),

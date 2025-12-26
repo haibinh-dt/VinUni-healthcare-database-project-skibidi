@@ -13,14 +13,14 @@ $page = max(1, (int)($_GET['page'] ?? 1));
 $perPage = 50;
 $offset = ($page - 1) * $perPage;
 
-// Filters
+// 1. Get Filters from URL
 $filterUser = $_GET['user'] ?? '';
 $filterAction = $_GET['action'] ?? '';
 $filterTable = $_GET['table'] ?? '';
 $filterDateFrom = $_GET['date_from'] ?? '';
 $filterDateTo = $_GET['date_to'] ?? '';
 
-// Build WHERE clause
+// 2. Build Condition Array (Clean - No 'WHERE' keyword)
 $whereConditions = [];
 $params = [];
 
@@ -49,17 +49,15 @@ if ($filterDateTo) {
     $params[] = $filterDateTo;
 }
 
-$whereClause = '';
-if (!empty($whereConditions)) {
-    $whereClause = 'WHERE ' . implode(' AND ', $whereConditions);
-}
+// 3. Combine conditions with AND
+$whereClause = !empty($whereConditions) ? implode(' AND ', $whereConditions) : "";
 
-// Get total count
+// 4. Get total count for pagination
 $allRecords = $db->queryView("v_audit_readable_log", $whereClause, $params);
 $totalRecords = count($allRecords);
-$totalPages = ceil($totalRecords / $perPage);
+$totalPages = max(1, ceil($totalRecords / $perPage)); // Ensure at least 1 page
 
-// Get audit logs
+// 5. Get paginated audit logs
 $limitStr = "$offset, $perPage"; 
 $auditLogs = $db->queryView(
     "v_audit_readable_log", 
@@ -69,13 +67,12 @@ $auditLogs = $db->queryView(
     $limitStr
 );
 
-// Get distinct users for filter
-$stmt = $conn->query("SELECT DISTINCT username FROM User ORDER BY username");
-$users = $stmt->fetchAll();
+// 6. Get today's audit count (No 'WHERE' prefix)
+$auditToday = $db->queryView("v_audit_readable_log", "DATE(changed_at) = CURDATE()");
 
-// Get distinct tables for filter
-$stmt = $conn->query("SELECT DISTINCT table_name FROM AuditLog ORDER BY table_name");
-$tables = $stmt->fetchAll();
+// 7. Get distinct values for dropdown menus
+$users = $conn->query("SELECT DISTINCT username FROM User ORDER BY username")->fetchAll();
+$tables = $conn->query("SELECT DISTINCT table_name FROM AuditLog ORDER BY table_name")->fetchAll();
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -90,7 +87,7 @@ $tables = $stmt->fetchAll();
 <div class="row mb-4">
     <?php
     $where = "DATE(changed_at) = CURDATE()";
-    $auditToday = $db->queryView("v_audit_readable_log", $where);
+    $auditToday = $db->queryView("v_audit_readable_log", "DATE(changed_at) = CURDATE()");
     $todayStats = [
         'total' => count($auditToday),
         'inserts' => count(array_filter($auditToday, fn($log) => $log['action_type'] === 'INSERT')),
